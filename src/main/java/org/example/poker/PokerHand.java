@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 
 public class PokerHand {
     private String hand;
-    private String pattern = "[2-9TJQKA][SHDC]";
+    private String patternHand = "[2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC]";
     public PokerHand(String hand) throws IncorrectHandException {
-        if(!Pattern.matches("[2-9TJQKA][SHDC]",hand)) {
+        if(!Pattern.matches(this.patternHand, hand)) {
             throw new IncorrectHandException();
         }
 

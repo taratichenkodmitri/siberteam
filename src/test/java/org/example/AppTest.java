@@ -3,9 +3,7 @@ package org.example;
 import org.example.exception.IncorrectHandException;
 import org.example.poker.PokerHand;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class AppTest {
 
@@ -13,7 +11,10 @@ public class AppTest {
     public void testCreatingInvalidHand() throws IncorrectHandException {
         PokerHand pokerHand = new PokerHand("2Q");
     }
-
+    @Test(expected = IncorrectHandException.class)
+    public void testCreatingInvalidHandExtraCharacters() throws IncorrectHandException {
+        PokerHand pokerHand = new PokerHand("KS KS 2H 5C JD TD KS");
+    }
     @Test
     public void testCreatingValidHand() throws IncorrectHandException {
         final String HAND = "KS 2H 5C JD TD";
