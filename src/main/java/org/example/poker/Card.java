@@ -3,17 +3,18 @@ package org.example.poker;
 import org.example.exception.IncorrectSuitException;
 
 public class Card {
-    public Integer value;
-    public Suit suit;
-    public Character denomination;
+    private Integer value;
+    private Suit suit;
+    private Character denomination;
 
     public Card(Character denomination, Character suit) throws IncorrectSuitException {
+        this.denomination = denomination;
         initValue(denomination);
         initSuit(suit);
     }
 
     private void initValue(Character denomination) {
-        this.value = ValueUtil.getValue(denomination);
+        this.value = ValueUtil.getCardValue(denomination);
     }
 
     private void initSuit(Character suit) throws IncorrectSuitException {

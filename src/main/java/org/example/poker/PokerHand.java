@@ -32,10 +32,18 @@ public class PokerHand {
     }
 
     private void initSuits() {
-        this.suits = this.cards.stream().map(item -> item.suit).collect(Collectors.toList());
+        this.suits = this.cards.stream().map(item -> item.getSuit()).collect(Collectors.toList());
         Collections.sort(this.suits);
     }
     public String getHand() {
         return hand;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public List<Suit> getSuits() {
+        return suits;
     }
 }
