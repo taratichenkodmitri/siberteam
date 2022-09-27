@@ -5,19 +5,22 @@ import org.example.exception.IncorrectSuitException;
 
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class PokerHand {
     private final String patternHand = "[2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC]";
     private String hand;
 
     private List<Card> cards = new ArrayList<>();
+    private List<Suit> suits = new ArrayList<>();
 
     public PokerHand(String hand) throws IncorrectHandException, IncorrectSuitException {
         if(!Pattern.matches(this.patternHand, hand)) {
             throw new IncorrectHandException();
         }
         this.hand = hand;
-        initCards();
+        this.initCards();
+        this.initSuits();
     }
 
     private void initCards() throws IncorrectSuitException {
@@ -26,6 +29,11 @@ public class PokerHand {
            this.cards.add(new Card(card.charAt(0), card.charAt(1)));
         }
         Collections.sort(this.cards, Comparator.comparing(Card::getValue));
+    }
+
+    private void initSuits() {
+        this.suits = this.cards.stream().map(item -> item.suit).collect(Collectors.toList());
+        Collections.sort(this.suits);
     }
     public String getHand() {
         return hand;
