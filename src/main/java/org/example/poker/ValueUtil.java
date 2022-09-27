@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ValueUtil {
-    private static final Map<Character, Integer> cardValues = new HashMap<Character, Integer>();
+    private static final Map<Character, Integer> cardValues = new HashMap<>();
     static {
         cardValues.put('2', 2);
         cardValues.put('3', 3);

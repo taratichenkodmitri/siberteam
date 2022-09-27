@@ -1,13 +1,12 @@
 package org.example.poker;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class PokerEvaluation {
     private PokerHand pokerHand;
-    List<Suit> suits;
-    List<Card> cards;
+    private List<Suit> suits;
+    private List<Card> cards;
+    private Map<Character, Integer> countsCardsInHand = new HashMap<>();
 
     public PokerEvaluation(PokerHand pokerHand) {
         this.pokerHand = pokerHand;
@@ -41,12 +40,27 @@ public class PokerEvaluation {
         }
         return true;
     }
-
     private Boolean isMinStraight() {
         Card ace = this.cards.get(4);
         ace.setValue(1);
         Collections.sort(pokerHand.getCards(), Comparator.comparing(Card::getValue));
         this.cards = pokerHand.getCards();
         return isStraight();
+    }
+
+    public void countCardsInHand() {
+        for(Card card: this.cards) {
+            System.out.println("hi");
+            Character denomination = card.getDenomination();
+            if(!this.countsCardsInHand.containsKey(denomination)) {
+                this.countsCardsInHand.put(denomination, 1);
+            } else {
+                this.countsCardsInHand.put(denomination, this.countsCardsInHand.get(denomination) + 1);
+            }
+        }
+    }
+
+    public Map<Character, Integer> getCountsCardsInHand() {
+        return this.countsCardsInHand;
     }
 }
