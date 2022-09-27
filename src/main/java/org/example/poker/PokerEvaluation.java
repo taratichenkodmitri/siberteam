@@ -8,10 +8,14 @@ public class PokerEvaluation {
     private List<Card> cards;
     private Map<Character, Integer> countsCardsInHand = new HashMap<>();
 
+    private Map<Integer, Integer> duplicates = new HashMap<>();
+
     public PokerEvaluation(PokerHand pokerHand) {
         this.pokerHand = pokerHand;
         this.suits = pokerHand.getSuits();
         this.cards = pokerHand.getCards();
+        this.countCardsInHand();
+        this.countDuplicates();
     }
 
     public Boolean isFlush() {
@@ -48,9 +52,8 @@ public class PokerEvaluation {
         return isStraight();
     }
 
-    public void countCardsInHand() {
+    private void countCardsInHand() {
         for(Card card: this.cards) {
-            System.out.println("hi");
             Character denomination = card.getDenomination();
             if(!this.countsCardsInHand.containsKey(denomination)) {
                 this.countsCardsInHand.put(denomination, 1);
@@ -60,7 +63,22 @@ public class PokerEvaluation {
         }
     }
 
+    private void countDuplicates() {
+        for(Map.Entry<Character, Integer> entry: this.countsCardsInHand.entrySet()) {
+            Integer count = entry.getValue();
+            if(!this.duplicates.containsKey(count)) {
+                this.duplicates.put(count, 1);
+            } else {
+                this.duplicates.put(count, this.duplicates.get(count) + 1);
+            }
+        }
+    }
+
     public Map<Character, Integer> getCountsCardsInHand() {
         return this.countsCardsInHand;
+    }
+
+    public Map<Integer, Integer> getDuplicates() {
+        return duplicates;
     }
 }

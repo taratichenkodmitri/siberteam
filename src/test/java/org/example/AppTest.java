@@ -7,6 +7,9 @@ import org.example.poker.PokerHand;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AppTest {
 
     @Test(expected = IncorrectHandException.class)
@@ -60,5 +63,39 @@ public class AppTest {
         PokerHand pokerHand2 = new PokerHand(HAND2);
         pokerEvaluation = new PokerEvaluation(pokerHand2);
         Assert.assertEquals(false, pokerEvaluation.isFlush());
+    }
+
+    @Test
+    public void testCountDuplicates() throws IncorrectHandException, IncorrectSuitException {
+        PokerHand pokerHand1 = new PokerHand("2D 2H 2C 2C KD");
+        PokerEvaluation pokerEvaluation1 = new PokerEvaluation(pokerHand1);
+        Map<Integer, Integer> actual1 = new HashMap<>();
+        Map<Integer, Integer> expected1 = pokerEvaluation1.getDuplicates();
+        actual1.put(4,1);
+        actual1.put(1, 1);
+        Assert.assertEquals(true, expected1.equals(actual1));
+
+        PokerHand pokerHand2 = new PokerHand("2D 2H 2C KC KD");
+        PokerEvaluation pokerEvaluation2 = new PokerEvaluation(pokerHand2);
+        Map<Integer, Integer> actual2 = new HashMap<>();
+        Map<Integer, Integer> expected2 = pokerEvaluation2.getDuplicates();
+        actual2.put(3,1);
+        actual2.put(2, 1);
+        Assert.assertEquals(true, expected2.equals(actual2));
+
+        PokerHand pokerHand3 = new PokerHand("2D 3H 4C 5C 6D");
+        PokerEvaluation pokerEvaluation3 = new PokerEvaluation(pokerHand3);
+        Map<Integer, Integer> actual3 = new HashMap<>();
+        Map<Integer, Integer> expected3 = pokerEvaluation3.getDuplicates();
+        actual3.put(1,5);
+        Assert.assertEquals(true, expected3.equals(actual3));
+
+        PokerHand pokerHand4 = new PokerHand("2D 2H 4C 4C 6D");
+        PokerEvaluation pokerEvaluation4 = new PokerEvaluation(pokerHand4);
+        Map<Integer, Integer> actual4 = new HashMap<>();
+        Map<Integer, Integer> expected4 = pokerEvaluation4.getDuplicates();
+        actual4.put(2,2);
+        actual4.put(1,1);
+        Assert.assertEquals(true, expected4.equals(actual4));
     }
 }
