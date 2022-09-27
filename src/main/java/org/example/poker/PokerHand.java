@@ -10,7 +10,7 @@ public class PokerHand {
     private final String patternHand = "[2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC]";
     private String hand;
 
-    private List<Card> cards = new ArrayList<Card>();
+    private List<Card> cards = new ArrayList<>();
 
     public PokerHand(String hand) throws IncorrectHandException, IncorrectSuitException {
         if(!Pattern.matches(this.patternHand, hand)) {
