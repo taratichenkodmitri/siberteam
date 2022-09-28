@@ -7,9 +7,8 @@ public class PokerEvaluation {
     private List<Suit> suits;
     private List<Card> cards;
     private Map<Character, Integer> countsCardsInHand = new HashMap<>();
-
     private Map<Integer, Integer> duplicates = new HashMap<>();
-
+    private Integer rank;
     public PokerEvaluation(PokerHand pokerHand) {
         this.pokerHand = pokerHand;
         this.suits = pokerHand.getSuits();
@@ -74,10 +73,41 @@ public class PokerEvaluation {
         }
     }
 
-    public Map<Character, Integer> getCountsCardsInHand() {
-        return this.countsCardsInHand;
+    public Integer evaluate() {
+        if (this.isFlush() && this.isStraight()) {
+            this.rank = 9;
+            return this.rank;
+        }
+        if (this.duplicates.containsKey(4)) {
+            this.rank = 8;
+            return this.rank;
+        }
+        if (this.duplicates.containsKey(3) && this.duplicates.containsKey(2)) {
+            this.rank = 7;
+            return this.rank;
+        }
+        if(isFlush()) {
+            this.rank = 6;
+            return this.rank;
+        }
+        if(isStraight()) {
+            this.rank = 5;
+            return this.rank;
+        }
+        if(this.duplicates.containsKey(3)) {
+            this.rank = 4;
+            return this.rank;
+        }
+        if(this.duplicates.containsKey(2)) {
+            if(this.duplicates.get(2) > 1) {
+                this.rank = 3;
+                return this.rank;
+            }
+            this.rank = 2;
+            return this.rank;
+        }
+        return 1;
     }
-
     public Map<Integer, Integer> getDuplicates() {
         return duplicates;
     }

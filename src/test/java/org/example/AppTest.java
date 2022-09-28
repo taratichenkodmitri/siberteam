@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class AppTest {
 
@@ -97,5 +98,35 @@ public class AppTest {
         actual4.put(2,2);
         actual4.put(1,1);
         Assert.assertEquals(true, expected4.equals(actual4));
+    }
+
+    public Integer testEvaluateHelper(String hand) throws IncorrectHandException, IncorrectSuitException {
+        PokerHand pokerHand = new PokerHand(hand);
+        PokerEvaluation pokerEvaluation = new PokerEvaluation(pokerHand);
+        return pokerEvaluation.evaluate();
+    }
+    @Test
+    public void testEvaluate() throws IncorrectHandException, IncorrectSuitException {
+        Assert.assertEquals(new Integer(9), testEvaluateHelper("AD 2D 3D 4D 5D"));
+
+        Assert.assertEquals(new Integer(8), testEvaluateHelper("2H 2S 3D 2H 2D"));
+
+        Assert.assertEquals(new Integer(7), testEvaluateHelper("3H 2S 3D 2H 2D"));
+
+        Assert.assertEquals(new Integer(6), testEvaluateHelper("AD 9D QD 2D TD"));
+
+        Assert.assertEquals(new Integer(5), testEvaluateHelper("AH 2S 3D 4S 5D"));
+
+        Assert.assertEquals(new Integer(5), testEvaluateHelper("6H 2S 3D 4S 5D"));
+
+        Assert.assertEquals(new Integer(5), testEvaluateHelper("6H 2S 3D 4S 5D"));
+
+        Assert.assertEquals(new Integer(4), testEvaluateHelper("6H 2S 3D 6S 6D"));
+
+        Assert.assertEquals(new Integer(3), testEvaluateHelper("2H 3S 2D 6S 6D"));
+
+        Assert.assertEquals(new Integer(2), testEvaluateHelper("2H 3S 2D AS KD"));
+
+        Assert.assertEquals(new Integer(1), testEvaluateHelper("2H QS TD 9S 5D"));
     }
 }
