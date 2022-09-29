@@ -138,7 +138,7 @@ public class AppTest {
     }
     @Test
     public void testCompare() throws IncorrectHandException, IncorrectSuitException {
-        //Pair and Highcard
+        //Pair and High card
         Assert.assertEquals(new Integer(1), testCompareHelper("2H 2S AD AS TD", "2H QS TD 9S 5D"));
 
         //Two pairs and Pair
@@ -161,5 +161,66 @@ public class AppTest {
 
         //Straight flush and Four of a kind
         Assert.assertEquals(new Integer(1), testCompareHelper("2D 3D 4D 5D 6D", "KC KS KH 2D KD"));
+
+        //High card and High card
+        Assert.assertEquals(new Integer(1), testCompareHelper("2H QS TD 9S 5D", "3H 8S TD 9S 2D"));
+
+        //Pair and Pair
+        Assert.assertEquals(new Integer(1), testCompareHelper("AH 5S TD 9S AD", "AH 8S TD AS 2D"));
+
+        //Two pair and Two pair
+        Assert.assertEquals(new Integer(1), testCompareHelper("TH 5S TD 9S 5D", "6H 6S 8D AS 8D"));
+
+        //Two pair and Two pair high card
+        Assert.assertEquals(new Integer(1), testCompareHelper("TH 5S TD 9S 5D", "5H 5S TD 7S TD"));
+
+        //Three of a kind and Three of a kind
+        Assert.assertEquals(new Integer(1), testCompareHelper("TH 5S TD 9S TD", "9H 9S 9D 6S 7D"));
+
+        //Three of a kind and Three of a kind high card
+        Assert.assertEquals(new Integer(1), testCompareHelper("TH 5S TD 9S TD", "TH TS TD 6S 7D"));
+
+        //Straight and Straight
+        Assert.assertEquals(new Integer(1), testCompareHelper("2H 3S 4D 5S 6D", "AH 2S 3D 4S 5D"));
+
+        //Flush and Flush
+        Assert.assertEquals(new Integer(1), testCompareHelper("2D 5D 8D KD TD", "3D 4D 9D QD TD"));
+
+        //Full house and Full house 3
+        Assert.assertEquals(new Integer(1), testCompareHelper("3H 3S 3D 2S 2D", "2H 2S 2D 3S 3D"));
+
+        //Full house and Full house 2
+        Assert.assertEquals(new Integer(1), testCompareHelper("3H 3S 3D 5S 5D", "3H 4S 4D 3S 3D"));
+
+        //Four of a kind and Four of a kind
+        Assert.assertEquals(new Integer(1), testCompareHelper("3H 3S 3D 3S 5D", "2H 2S 4D 2S 2D"));
+
+        //Four of a kind and Four of a kind high card
+        Assert.assertEquals(new Integer(1), testCompareHelper("3H 3S 3D 3S 5D", "3H 3S 4D 3S 3D"));
+
+        //Straight flush and Straight flush
+        Assert.assertEquals(new Integer(1), testCompareHelper("2D 3D 4D 5D 6D", "AD 2D 3D 4D 5D"));
+
+        //Straight flush and Straight flush
+        Assert.assertEquals(new Integer(1), testCompareHelper("TD JD QD KD AD", "9D TD JD QD KD"));
+
+        //High card and High card equals
+        Assert.assertEquals(new Integer(0), testCompareHelper("2H QS TD 9S 5D", "2H QS TD 9S 5D"));
+
+        //Pair and Pair equals
+        Assert.assertEquals(new Integer(0), testCompareHelper("AH QS TD 9S AD", "AH QS TD 9S AD"));
+
+        //Two pair and Two pair equals
+        Assert.assertEquals(new Integer(0), testCompareHelper("TH 5S TD 9S 5D", "TH 5S TD 9S 5D"));
+
+        //Three of a kind and Three of a kind equals
+        Assert.assertEquals(new Integer(0), testCompareHelper("TH 5S TD 9S TD", "TH 5S TD 9S TD"));
+
+        //Straight and Straight equals
+        Assert.assertEquals(new Integer(0), testCompareHelper("2H 3S 4D 5S 6D", "2H 3S 4D 5S 6D"));
+
+        //Flush and Flush equals
+        Assert.assertEquals(new Integer(0), testCompareHelper("2D 5D 8D KD TD", "2D 5D 8D KD TD"));
+
     }
 }

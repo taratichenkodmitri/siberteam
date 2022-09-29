@@ -41,6 +41,7 @@ public class PokerEvaluation implements Comparable<PokerEvaluation>{
         Card currentCard;
         if (this.cards.get(4).getDenomination() == 'A') {
             if(isMinStraight()) {
+                this.initValueHand();
                 return true;
             } else {
                 Card ace = this.cards.get(0);
@@ -134,6 +135,18 @@ public class PokerEvaluation implements Comparable<PokerEvaluation>{
     @Override
     public int compareTo(PokerEvaluation pokerEvaluation) {
         Integer rank1 = this.evaluate(), rank2 = pokerEvaluation.evaluate();
-        return rank1 > rank2 ? 1 : rank1 == rank2 ? 0 : -1;
+        return rank1 > rank2 ? 1 : rank1 == rank2 ? this.compareDrawCombination(pokerEvaluation) : -1;
+    }
+
+    public int compareDrawCombination(PokerEvaluation pokerEvaluation) {
+        List<Integer> valueHand1 = this.getValueHand(), valueHand2 = pokerEvaluation.getValueHand();
+        for(int i = 0; i < valueHand1.size(); i++) {
+            if (valueHand1.get(i) > valueHand2.get(i)) {
+                return 1;
+            } else if (valueHand1.get(i) < valueHand2.get(i)) {
+                return -1;
+            }
+        }
+        return 0;
     }
 }
