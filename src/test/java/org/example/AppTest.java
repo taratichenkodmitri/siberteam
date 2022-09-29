@@ -129,4 +129,37 @@ public class AppTest {
 
         Assert.assertEquals(new Integer(1), testEvaluateHelper("2H QS TD 9S 5D"));
     }
+
+    public Integer testCompareHelper(String hand1, String hand2) throws IncorrectHandException, IncorrectSuitException {
+        PokerHand pokerHand1 = new PokerHand(hand1);
+        PokerHand pokerHand2 = new PokerHand(hand2);
+
+        return pokerHand1.compareTo(pokerHand2);
+    }
+    @Test
+    public void testCompare() throws IncorrectHandException, IncorrectSuitException {
+        //Pair and Highcard
+        Assert.assertEquals(new Integer(1), testCompareHelper("2H 2S AD AS TD", "2H QS TD 9S 5D"));
+
+        //Two pairs and Pair
+        Assert.assertEquals(new Integer(1), testCompareHelper("2H 3S 2D 6S 6D", "2H 3S 2D AS KD"));
+
+        //Three of a kind and Two pairs
+        Assert.assertEquals(new Integer(1), testCompareHelper("AH 3S AD 6S AD", "2H 3S 2D 6S 6D"));
+
+         //Straight and Three of a kind
+        Assert.assertEquals(new Integer(1), testCompareHelper("7S 6H 5D 4C 3D", "AH 3S AD 6S AD"));
+
+        //Flush and Straight
+        Assert.assertEquals(new Integer(1), testCompareHelper("7D 2D AD TD QD", "7S 6H 5D 4C 3D"));
+
+        //Full house and Flush
+        Assert.assertEquals(new Integer(1), testCompareHelper("KS 2H KC 2D KD", "7D 2D AD TD QD"));
+
+        //Four of a kind and Full house
+        Assert.assertEquals(new Integer(1), testCompareHelper("KC KS KH 2D KD", "KS 2H KC 2D KD"));
+
+        //Straight flush and Four of a kind
+        Assert.assertEquals(new Integer(1), testCompareHelper("2D 3D 4D 5D 6D", "KC KS KH 2D KD"));
+    }
 }

@@ -1,11 +1,13 @@
 package org.example.poker;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class PokerEvaluation {
+public class PokerEvaluation implements Comparable<PokerEvaluation>{
     private PokerHand pokerHand;
     private List<Suit> suits;
     private List<Card> cards;
+    private List<Integer> valueHand;
     private Map<Character, Integer> countsCardsInHand = new HashMap<>();
     private Map<Integer, Integer> duplicates = new HashMap<>();
     private Integer rank;
@@ -15,8 +17,21 @@ public class PokerEvaluation {
         this.cards = pokerHand.getCards();
         this.countCardsInHand();
         this.countDuplicates();
+        this.initValueHand();
     }
 
+    public void initValueHand() {
+        List<Card> valueHand = new ArrayList<>(this.cards);
+        valueHand.sort((a, b) -> {
+            Integer countDiff = this.countsCardsInHand.get(b.getDenomination()) - this.countsCardsInHand.get(a.getDenomination());
+            if(countDiff != 0) {
+                return countDiff;
+            }
+            Integer valueA = a.getValue(), valueB = b.getValue();
+            return valueB > valueA ? 1 : valueB == valueA ? 0 : -1;
+        });
+        this.valueHand = valueHand.stream().map(item -> item.getValue()).collect(Collectors.toList());
+    }
     public Boolean isFlush() {
         return this.suits.get(0) == this.suits.get(4);
     }
@@ -110,5 +125,15 @@ public class PokerEvaluation {
     }
     public Map<Integer, Integer> getDuplicates() {
         return duplicates;
+    }
+
+    public List<Integer> getValueHand() {
+        return valueHand;
+    }
+
+    @Override
+    public int compareTo(PokerEvaluation pokerEvaluation) {
+        Integer rank1 = this.evaluate(), rank2 = pokerEvaluation.evaluate();
+        return rank1 > rank2 ? 1 : rank1 == rank2 ? 0 : -1;
     }
 }

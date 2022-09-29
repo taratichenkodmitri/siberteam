@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class PokerHand {
+public class PokerHand implements Comparable<PokerHand>{
     private final String patternHand = "[2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC] [2-9TJQKA][SHDC]";
     private String hand;
 
@@ -45,5 +45,14 @@ public class PokerHand {
 
     public List<Suit> getSuits() {
         return suits;
+    }
+
+    @Override
+    public int compareTo(PokerHand pokerHand) {
+        PokerEvaluation pokerEvaluation1 = new PokerEvaluation(this);
+        PokerEvaluation pokerEvaluation2 = new PokerEvaluation(pokerHand);
+
+
+        return pokerEvaluation1.compareTo(pokerEvaluation2);
     }
 }
